@@ -24,8 +24,8 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="FlujoUsuario/homepage.jsp">Pagina principal</a></li>
-                        <li class="nav-item"><a class="nav-link" href="FlujoUsuario/historial.jsp">Estado de pedido</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>">Pagina principal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=historialPedidos">Estado de pedido</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Farmacias</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -100,7 +100,7 @@
             </div>
 			<div class = "box">
                 <input type="text" name="search" placeholder="Buscar producto" class="src" autocomplete = "off">
-		</div>
+		    </div>
         </header>
         <!-- Section-->
 		

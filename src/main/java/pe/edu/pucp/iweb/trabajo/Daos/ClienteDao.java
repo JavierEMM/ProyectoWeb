@@ -1,6 +1,8 @@
 package pe.edu.pucp.iweb.trabajo.Daos;
 
 import pe.edu.pucp.iweb.trabajo.Beans.BCliente;
+import pe.edu.pucp.iweb.trabajo.Beans.BPedido;
+import pe.edu.pucp.iweb.trabajo.Beans.BPedidoCliente;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -163,39 +165,44 @@ public class ClienteDao {
         }
         return null;
     }
-
+    public String DNI(String correo) {
+        String sql = "SELECT c.dni FROM cliente c WHERE ? = c.logueo_correo";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, correo);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            String dni = rs.getString(1);
+            return dni;
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
     //FUNCION QUE MUESTAR HISTORIAL DE PEDIDOS
-    public void mostrarHistorial(String DNI) {
-
-        String sql = "SELECT precio,cantidad ,p.numeroOrden as \"Numero de Orden\", p.estado as \"Estado de pedido\",pr.nombre as \"Nombre de productos\" , f.nombre as \"Farmacia\"FROM pedidos p\n" +
+    public ArrayList<BPedidoCliente> mostrarHistorial(String DNI) {
+        ArrayList<BPedidoCliente> pedidos = new ArrayList<>();
+        String sql = "SELECT truncate(sum(pr.precio*pt.cantidad),1),sum(pt.cantidad),p.numeroOrden , p.estado , f.nombre FROM pedidos p\n" +
                 "INNER JOIN producto_tiene_pedidos pt ON pt.pedidos_numeroOrden=p.numeroOrden\n" +
                 "INNER JOIN producto pr ON pr.idProducto=pt.producto_idProducto\n" +
                 "INNER JOIN farmacia f ON pr.farmacia_ruc = f.ruc\n" +
-                "WHERE p.usuarioDni = ? ;";
-
+                "WHERE p.usuarioDni = ? GROUP BY p.numeroOrden;";
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setString(1, DNI);
             ResultSet rs = pstmt.executeQuery();
-
-            System.out.println("Numero de Orden     |   Estado de Pedido   |  Cantidad    |   Resumen de Pago    |  Producto    |    Farmacia");
             while (rs.next()) {
-                double precio = rs.getDouble(1);
+                double resumenPago = rs.getDouble(1);
                 int cantidad = rs.getInt(2);
-                String numeroOrden = rs.getString(3);
+                int numeroOrden = rs.getInt(3);
                 String estado = rs.getString(4);
-                String nombreProducto = rs.getString(5);
-                String farmacia = rs.getString(6);
-
-                double resumenPago = (precio * cantidad);
-                System.out.println(numeroOrden + "||" + estado + "||" + cantidad + "||" + resumenPago + "||" + nombreProducto + "||" + farmacia);
+                String farmacia = rs.getString(5);
+                pedidos.add(new BPedidoCliente(numeroOrden,cantidad, estado,resumenPago,farmacia));
             }
-
-
-            System.out.println("-------------------------------------------------------------------------");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return pedidos;
     }
 
 

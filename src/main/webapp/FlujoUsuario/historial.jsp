@@ -1,5 +1,9 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BPedidoCliente" %>
+<%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BCliente" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%ArrayList<BPedidoCliente> listaPedidos = (ArrayList) request.getAttribute("listaPedidos");%>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -104,17 +108,18 @@
                 </tr>
             </thead>
             <tbody>
+            <%for (BPedidoCliente bCliente : listaPedidos) {%>
                 <tr>
                     <td>
                         <div class="product-item">
-                            <a class="product-thumb" href="#"><img src="images/shopping-icon.png" alt="Product"></a>
+                            <a class="product-thumb" href="#"><img src="FlujoUsuario/images/shopping-icon.png" alt="Product"></a>
                             <div class="product-info">
-                                <h4 class="product-title"><a href="#">Farmacia Fibra Toxica</a></h4><span><em>Codigo:</em> 212424</span><span><em>Cant. prod:</em>15</span>
+                                <h4 class="product-title"><a href="#"><%=bCliente.getFarmacia()%></a></h4><span><em>Codigo:</em><%=bCliente.getNumeroOrden()%></span><span><em>Cant. prod:</em><%=bCliente.getCantidad()%></span>
                             </div>
                         </div>
                     </td>
-					<td class="text-center text-lg text-medium">S/. 40</td>
-                    <td class="text-center text-lg text-medium">Pendiente</td>
+					<td class="text-center text-lg text-medium">"S/.<%=bCliente.getResumenPago()%>"</td>
+                    <td class="text-center text-lg text-medium"><%=bCliente.getEstado()%></td>
 					<td class="text-center">
 						<div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
 						  <div class="modal-dialog modal-dialog-centered">
@@ -136,80 +141,11 @@
 						<a class="remove-from-cart" data-bs-toggle="modal" href="#exampleModalToggle" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="bi bi-trash"></i></a>
 					</td> 
                 </tr>
-                <tr>
-                    <td>
-                        <div class="product-item">
-                            <a class="product-thumb" href="#"><img src="images/shopping-icon.png" alt="Product"></a>
-                            <div class="product-info">
-                                <h4 class="product-title"><a href="#">Farmacia Electroshock</a></h4><span><em>Codigo:</em> 12346543</span><span><em>Cant. prod:</em> 10</span>
-                            </div>
-                        </div>
-                    </td>
-					<td class="text-center text-lg text-medium">S/. 150</td>
-                    <td class="text-center text-lg text-medium">Entregado</td>
-					<td class="text-center">
-						<div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-						  <div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-							  <div class="modal-header">
-								<h5 class="modal-title" id="exampleModalToggleLabel">Confirmación</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							  </div>
-							  <div class="modal-body">
-								¿Estas seguro de que quiere eliminar el pedido?
-							  </div>
-							  <div class="modal-footer">
-								<button style="margin-right:10px" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-								<button class="btn btn-success" onclick="alert('Se ha eliminado el pedido')" data-bs-dismiss="modal">Aceptar</button>
-							  </div>
-							</div>
-						  </div>
-						</div>
-						<a class="remove-from-cart" data-bs-toggle="modal" href="#exampleModalToggle" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="bi bi-trash"></i></a>
-					</td> 
-                </tr>
-                
-				<tr>
-                    <td>
-                        <div class="product-item">
-                            <a class="product-thumb" href="#"><img src="images/shopping-icon.png" alt="Product"></a>
-                            <div class="product-info">
-                                <h4 class="product-title"><a href="#">Farmacia Fibra Toxica</a></h4><span><em>Codigo:</em> 32322424</span><span><em>Cant. prod:</em>15</span>
-                            </div>
-                        </div>
-                    </td>
-					<td class="text-center text-lg text-medium">S/. 50</td>
-                    <td class="text-center text-lg text-medium">Pendiente</td>
-					<td class="text-center">
-						<div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-						  <div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-							  <div class="modal-header">
-								<h5 class="modal-title" id="exampleModalToggleLabel">Confirmación</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							  </div>
-							  <div class="modal-body">
-								¿Estas seguro de que quiere eliminar el pedido?
-							  </div>
-							  <div class="modal-footer">
-								<button style="margin-right:10px" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-								<button class="btn btn-success" onclick="alert('Se ha eliminado el pedido')" data-bs-dismiss="modal">Aceptar</button>
-							  </div>
-							</div>
-						  </div>
-						</div>
-						<a class="remove-from-cart" data-bs-toggle="modal" href="#exampleModalToggle" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="bi bi-trash"></i></a>
-					</td> 
-                </tr>
+            <%}%>
             </tbody>
         </table>
     </div>
-   
-    
 </div>
-		
-		
-		
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
