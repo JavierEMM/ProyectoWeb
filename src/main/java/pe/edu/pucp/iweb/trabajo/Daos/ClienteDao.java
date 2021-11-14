@@ -1,12 +1,12 @@
 package pe.edu.pucp.iweb.trabajo.Daos;
 
+import pe.edu.pucp.iweb.trabajo.Beans.BCliente;
+
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,66 +145,24 @@ public class ClienteDao {
 
 
     //FUNCION QUE MUESTRA PERFIL DE CLIENTE
-    public void mostrarPerfil(String correo) {
-        String dni = null;
-        String nombre = null;
-        String apellidos = null;
-        String fecha_nac = null;
-        String distrito = null;
-        String email = null;
-        String sql = "SELECT c FROM cliente c  WHERE ? = c.logueo_correo";
-        boolean bandera = false;
+    public BCliente mostrarPerfil(String correo) {
+        String sql = "SELECT c.dni,c.nombre,c.apellidos,c.distrito FROM cliente c  WHERE ? = c.logueo_correo";
         try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, correo);
-            String sqlBusqueda = "SELECT dni,nombre,apellidos,fecha_nac,distrito,logueo_correo FROM cliente";
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sqlBusqueda);) {
-                while (rs.next()) {
-                    email = rs.getString(6);
-                    if (email.equalsIgnoreCase(correo)) {
-                        dni = rs.getString(1);
-                        nombre = rs.getString(2);
-                        apellidos = rs.getString(3);
-                        fecha_nac = rs.getString(4);
-                        distrito = rs.getString(5);
-                        break;
-                    }
-
-                }
-                String DNI = dni;
-                System.out.println("DNI     |   Nombre  |   Apellidos   |   FechaDeNacimiento   |   Distrito    |   CorreoDeLogueo");
-                System.out.println(dni + "  |   " + nombre + "   |   " + apellidos + "    |   " + fecha_nac + "    |   " + distrito + "     |   " + email);
-                System.out.println("-----------------------------------------------------------------------------");
-                Scanner sc = new Scanner(System.in);
-                while (true) {
-                    System.out.println("1. Mostrar historial de pedidos");
-                    System.out.println("2. Ver el carrito de compras");
-                    System.out.println("3. Buscar un producto");
-                    System.out.print("Ingrese la opción --> ");
-                    String option = sc.nextLine();
-                    switch (option) {
-                        case "1":
-                            mostrarHistorial(DNI);
-                            break;
-                        case "2":
-                            verCarrito();
-                            break;
-                        case "3":
-                            buscarProducto();
-                            break;
-
-                    }
-
-
-                }
-
-            }
-        } catch (SQLException throwables) {
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            String dni = rs.getString(1);
+            String nombre = rs.getString(2);
+            String apellidos = rs.getString(3);
+            String distrito = rs.getString(4);
+            BCliente bCliente = new BCliente(dni,nombre,apellidos,distrito,correo);
+            return bCliente;
+        }catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return null;
     }
-
 
     //FUNCION QUE MUESTAR HISTORIAL DE PEDIDOS
     public void mostrarHistorial(String DNI) {
@@ -395,3 +353,24 @@ public class ClienteDao {
 }
 
 
+            /*String DNI = dni;
+
+                Scanner sc = new Scanner(System.in);
+                while (true) {
+                    System.out.println("1. Mostrar historial de pedidos");
+                    System.out.println("2. Ver el carrito de compras");
+                    System.out.println("3. Buscar un producto");
+                    System.out.print("Ingrese la opción --> ");
+                    String option = sc.nextLine();
+                    switch (option) {
+                        case "1":
+                            mostrarHistorial(DNI);
+                            break;
+                        case "2":
+                            verCarrito();
+                            break;
+                        case "3":
+                            buscarProducto();
+                            break;
+                    }
+                }*/
