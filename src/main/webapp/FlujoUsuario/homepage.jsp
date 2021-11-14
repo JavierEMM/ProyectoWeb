@@ -1,5 +1,7 @@
+<%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BCliente" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%String correo = (String) request.getAttribute("correo");%>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -70,8 +72,8 @@
 						  </a>
 
 						  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<li><a href="<%= request.getContextPath()%>/Usuario?opcion=mostrarPerfil" class="dropdown-item" >Ver perfil</a></li>
-							<li><a href="<%= request.getContextPath() %>" class="dropdown-item" >Cerrar sesión</a></li>
+							<li><a href="<%= request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=mostrarPerfil" class="dropdown-item" >Ver perfil</a></li>
+							<li><a href="<%= request.getContextPath()%>" class="dropdown-item" >Cerrar sesión</a></li>
 						  </ul>
 						</div>                
 

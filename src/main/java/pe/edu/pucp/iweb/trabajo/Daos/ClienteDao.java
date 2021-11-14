@@ -289,6 +289,22 @@ public class ClienteDao {
             }
         }
     }
+    public BCliente updatePerfil(String nombre, String Apellido, String distrito,String correo){
+        String sql="UPDATE cliente c SET c.nombre = ?, c.apellidos = ?, c.distrito = ? WHERE c.logueo_correo= ?;";
+        try(Connection conn = DriverManager.getConnection(url,user,password);
+        PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1,nombre);
+            pstmt.setString(2,Apellido);
+            pstmt.setString(3,distrito);
+            pstmt.setString(4,correo);
+            pstmt.executeUpdate();
+            BCliente bCliente = mostrarPerfil(correo);
+            return bCliente;
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 
     //FUNCION PARA AGREGAR CLIENTE
     /*public void agregarCliente(String logueo_correo){

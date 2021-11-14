@@ -54,7 +54,7 @@ public class PaginaPrincipal extends HttpServlet {
             if (rol.equalsIgnoreCase("administrador")) {
                 response.sendRedirect(request.getContextPath() + "/AdminPrincipal");
             } else if (rol.equalsIgnoreCase("cliente")) {
-                response.sendRedirect(request.getContextPath() + "/ClientePrincipal");
+                response.sendRedirect(request.getContextPath() + "/Usuario?correo=" + correo);
             } else if (rol.equalsIgnoreCase("farmacia")) {
                 response.sendRedirect(request.getContextPath() + "/FarmaciaPrincipal");
             }
