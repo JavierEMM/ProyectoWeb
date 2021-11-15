@@ -76,7 +76,7 @@
 						  </ul>
 						</div>                
 
-                    <form action="FlujoUsuario/shopping_cart.jsp">
+                    <form method="post" action="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=carrito">
                         <form class="d-flex">
                             <button class="btn btn-outline-dark" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
@@ -134,7 +134,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="jabon.jsp">Ver detalle</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>">Ver detalle</a></div>
                             </div>
                         </div>
                     </div>
@@ -164,7 +164,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="FlujoUsuario/jabon.jsp">Ver detalle</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>">Ver detalle</a></div>
                             </div>
                         </div>
                     </div>

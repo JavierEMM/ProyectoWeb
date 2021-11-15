@@ -79,13 +79,13 @@ public class ClienteServlet extends HttpServlet {
             case "carrito":
                 String numero = request.getParameter("numero") != null ? request.getParameter("numero") : "0";
                 int numeroInt= Integer.parseInt(numero);
-                System.out.println(numeroInt);
                 RequestDispatcher view4 = request.getRequestDispatcher("/FlujoUsuario/shopping_cart.jsp");
                 view4.forward(request, response);
                 break;
             case "mostrarFarmacia":
                 String farmaciaRuc= request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
-                System.out.println(farmaciaRuc);
+                RequestDispatcher view5 = request.getRequestDispatcher("/FlujoUsuario/homepage.jsp");
+                view5.forward(request,response);
                 break;
 
         }

@@ -37,7 +37,7 @@
                             <div class="signup-content">
                                 <div class="signup-form">
                                     <div style="text-align: center;"><h4 class="form-title">ELEGIR FARMACIA</h4></div>
-                                    <form method="POST" class="register-form" id="register-form">
+                                    <form method="post" action="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=mostrarFarmacia" class="register-form" id="register-form">
 
                                         <div class="form-group">
                                             <div class="fake-input">
@@ -52,7 +52,7 @@
 
                                         </div>
                                         <div class="form-group form-button">
-                                            <div style="margin-top:5px; text-align: center;"><a class="btn btn-success" href="homepage.jsp">Continuar</a></div>
+                                            <div style="margin-top:5px; text-align: center;"><button type="submit" class="btn btn-success">Continuar</button></div>
                                         </div>
                                     </form>
 
@@ -74,7 +74,7 @@
                       </ul>
                     </div>
 
-                <form action="shopping_cart.jsp">
+                <form method="post" action="<%= request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=carrito">
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
