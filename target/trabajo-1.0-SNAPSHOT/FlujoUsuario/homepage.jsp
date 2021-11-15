@@ -1,7 +1,10 @@
 <%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BCliente" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BFarmacia" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%String correo = (String) request.getAttribute("correo");%>
+<%ArrayList<BFarmacia> listafarmacias = (ArrayList) request.getAttribute("listafarmacias");%>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -33,26 +36,22 @@
                                 <div class="signup-content">
                                     <div class="signup-form">
                                         <div style="text-align: center;"><h4 class="form-title">ELEGIR FARMACIA</h4></div>
-                                        <form method="POST" class="register-form" id="register-form">
+                                        <form method="post" action="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=mostrarFarmacia" class= "register-form" id="register-form">
 
                                             <div class="form-group">
 												<div class="fake-input">
-													<input id="farmacia" type="search" list="listafarmacias" placeholder="Elige una farmacia" label for="listadistritos">
-													<img src="images/home-icon.png" width="20" />
+													<input id="farmacia" name="ruc" type="search" list="listafarmacias" placeholder="Elige una farmacia" label for="listadistritos" autocomplete="off">
+													<img src="FlujoUsuario/images/home-icon.png" width="20" />
 												</div>
                                                 <datalist id="listafarmacias">
-                                                    <option value="Farmacia Fibra Toxica">Farmacia Fibra Toxica</option>
-                                                    <option value="Farmacia Electroshock">Farmacia Electroshock</option>
-                                                    <option value="Farmacia Hormigon Armado">Farmacia Hormigon Armado</option>
-                                                    <option value="Farmacia Naranja Mecánica">Farmacia Naranja Mecánica</option>
-                                                    <option value="Farmacia Electroforce">Farmacia Electroforce</option>
-                                                    <option value="Farmacia Control Automático">Farmacia Control Automático</option>
-                                                    <option value="Farmacia Diablitos Azules">Farmacia Diablitos Azules</option>
+                                                    <%for (BFarmacia bFarmacia : listafarmacias){%>
+                                                    <option value="<%=bFarmacia.getNombre()%>"><%=bFarmacia.getDireccion()%></option>
+                                                    <%}%>
                                                 </datalist>
 
                                             </div>
                                             <div class="form-group form-button">
-												<div style="margin-top:5px; text-align: center;"><a class="btn btn-success" href="FlujoUsuario/homepage.jsp">Continuar</a></div>
+												<div style="margin-top:5px; text-align: center;"><button type="submit" class="btn btn-success">Continuar</button></div>
                                             </div>
                                         </form>
                                     
@@ -98,9 +97,11 @@
                     <p class="lead fw-normal text-white-50 mb-0">El mejor lugar para comprar</p>
                 </div>
             </div>
-			<div class = "box">
-                <input type="text" name="search" placeholder="Buscar producto" class="src" autocomplete = "off">
-		    </div>
+            <form method="post" action="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=Buscar">
+                <div class = "box">
+                    <input  type="text" name="search" placeholder="Buscar producto" class="src" autocomplete = "off">
+                </div>
+            </form>
         </header>
         <!-- Section-->
 		

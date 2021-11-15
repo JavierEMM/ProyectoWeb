@@ -277,9 +277,9 @@ public class FarmaciaDao {
     }
 
     //FUNCION PARA BUSCAR UNA FARMACIA EN ESPECIFICO
-    public void mostrarHistorialPedidosSAdmin(String ruc){
+    public void buscarUnaFarmacia(String ruc){
         Scanner sc= new Scanner(System.in);
-        String sql ="SELECT f.ruc, f.nombre, l.correo, f.distrito,f.pedidosPendientes,bloqueado FROM farmacia f \n" +
+        String sql ="SELECT f.ruc FROM farmacia f \n" +
                 "INNER JOIN credenciales l ON l.correo = f.logueo_correo\n" +
                 "INNER JOIN producto p ON p.farmacia_ruc=f.ruc\n" +
                 "INNER JOIN producto_tiene_pedidos pt ON p.idProducto = pt.producto_idProducto\n" +

@@ -4,6 +4,7 @@ import pe.edu.pucp.iweb.trabajo.Beans.BCliente;
 import pe.edu.pucp.iweb.trabajo.Beans.BPedido;
 import pe.edu.pucp.iweb.trabajo.Beans.BPedidoCliente;
 import pe.edu.pucp.iweb.trabajo.Daos.ClienteDao;
+import pe.edu.pucp.iweb.trabajo.Daos.FarmaciaDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,8 +19,9 @@ public class ClienteServlet extends HttpServlet {
        String opcion = request.getParameter("opcion") != null ? request.getParameter("opcion") : "salir";
        String correo = request.getParameter("correo") != null ? request.getParameter("correo") : "salir";
        request.setAttribute("correo",correo);
-
        ClienteDao clienteDao = new ClienteDao();
+       FarmaciaDao farmaciaDao= new FarmaciaDao();
+       request.setAttribute("listafarmacias",farmaciaDao.mostrarListaFarmacias());
         switch (opcion) {
             case "mostrarPerfil":
                 BCliente bCliente = clienteDao.mostrarPerfil(correo);
@@ -36,6 +38,8 @@ public class ClienteServlet extends HttpServlet {
                 break;
             case "carrito":
                 break;
+            case "mostrarPaginaFaramcia":
+                break;
             case "salir":
                 RequestDispatcher view1 = request.getRequestDispatcher("/FlujoUsuario/homepage.jsp");
                 view1.forward(request, response);
@@ -47,37 +51,44 @@ public class ClienteServlet extends HttpServlet {
 
         String opcion = request.getParameter("opcion") != null ? request.getParameter("opcion") : "salir";
         String correo = request.getParameter("correo") != null ? request.getParameter("correo") : "salir";
+        request.setAttribute("correo",correo);
         ClienteDao clienteDao = new ClienteDao();
-        switch (opcion){
+        FarmaciaDao farmaciaDao= new FarmaciaDao();
+        request.setAttribute("listafarmacias",farmaciaDao.mostrarListaFarmacias());
+        switch (opcion) {
             case "Update":
                 String nombre = request.getParameter("Nombres") != null ? request.getParameter("Nombres") : "";
                 String apellidos = request.getParameter("Apellidos") != null ? request.getParameter("Apellidos") : "";
                 String distrito = request.getParameter("Distrito") != null ? request.getParameter("Distrito") : "";
 
-                clienteDao.updatePerfil(nombre,apellidos,distrito,correo);
-                response.sendRedirect(request.getContextPath() + "/Usuario?correo="+correo + "&opcion=mostrarPerfil");
+                clienteDao.updatePerfil(nombre, apellidos, distrito, correo);
+                response.sendRedirect(request.getContextPath() + "/Usuario?correo=" + correo + "&opcion=mostrarPerfil");
                 break;
             case "Buscar":
 
                 String texto = request.getParameter("search");
-                if(texto.equalsIgnoreCase("") ){
+                if (texto.equalsIgnoreCase("")) {
                     response.sendRedirect(request.getContextPath() + "/Usuario?correo=" + correo + "&opcion=salir");
-
-                }else{
+                } else {
                     request.setAttribute("productos", clienteDao.buscarProducto(texto));
-                    request.setAttribute("BuscarProducto",texto);
+                    request.setAttribute("BuscarProducto", texto);
                     RequestDispatcher view3 = request.getRequestDispatcher("/FlujoUsuario/jabon.jsp");
-                    view3.forward(request,response);
-
+                    view3.forward(request, response);
                 }
-
-
+                break;
+            case "carrito":
+                String numero = request.getParameter("numero") != null ? request.getParameter("numero") : "0";
+                int numeroInt= Integer.parseInt(numero);
+                System.out.println(numeroInt);
+                RequestDispatcher view4 = request.getRequestDispatcher("/FlujoUsuario/shopping_cart.jsp");
+                view4.forward(request, response);
+                break;
+            case "mostrarFarmacia":
+                String farmaciaRuc= request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+                System.out.println(farmaciaRuc);
                 break;
 
         }
-
-
-
 
     }
 }

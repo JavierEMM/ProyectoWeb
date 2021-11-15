@@ -1,8 +1,12 @@
 <%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BCliente" %>
+<%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BFarmacia" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%BCliente bCliente = (BCliente) request.getAttribute("Perfil");%>
 <%String correo = (String) request.getAttribute("correo");%>
+<%ArrayList<BFarmacia> listafarmacias = (ArrayList) request.getAttribute("listafarmacias");%>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -24,8 +28,8 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link" aria-current="page" href="homepage.jsp">Pagina principal</a></li>
-                    <li class="nav-item"><a class="nav-link" href="historial.jsp">Estado de pedido</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>">Pagina principal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=historialPedidos">Estado de pedido</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Farmacias</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -37,17 +41,13 @@
 
                                         <div class="form-group">
                                             <div class="fake-input">
-                                                <input id="farmacia" type="search" name="campobusqueda" list="listafarmacias" placeholder="Elige una farmacia" label for="listadistritos">
+                                                <input id="farmacia" type="search" name="campobusqueda" list="listafarmacias" placeholder="Elige una farmacia" label for="listadistritos" autocomplete="off">
                                                 <img src="FlujoUsuario/images/home-icon.png" width="20" />
                                             </div>
                                             <datalist id="listafarmacias">
-                                                <option value="Farmacia Fibra Toxica">Farmacia Fibra Toxica</option>
-                                                <option value="Farmacia Erectroshock">Farmacia Electroshock</option>
-                                                <option value="Farmacia Hormigon Armado">Farmacia Hormigon Armado</option>
-                                                <option value="Farmacia Naranja Mecánica">Farmacia Naranja Mecánica</option>
-                                                <option value="Farmacia Electroforce">Farmacia Electroforce</option>
-                                                <option value="Farmacia Control Automático">Farmacia Control Automático</option>
-                                                <option value="Farmacia Diablitos Azules">Farmacia Diablitos Azules</option>
+                                                <%for (BFarmacia bFarmacia : listafarmacias){%>
+                                                <option value="<%=bFarmacia.getNombre()%>"><%=bFarmacia.getDireccion()%></option>
+                                                <%}%>
                                             </datalist>
 
                                         </div>
