@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%BCliente bCliente = (BCliente) request.getAttribute("Perfil");%>
-<%String correo = (String) request.getAttribute("Correo");%>
+<%String correo = (String) request.getAttribute("correo");%>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -177,7 +177,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            <form method="post">
+                            <form method="post" action="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=Update">
                               <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Nombres</label>
                                 <input name="Nombres" type="text" class="form-control" id="recipient-name">

@@ -1,8 +1,6 @@
 package pe.edu.pucp.iweb.trabajo.Daos;
 
-import pe.edu.pucp.iweb.trabajo.Beans.BCliente;
-import pe.edu.pucp.iweb.trabajo.Beans.BPedido;
-import pe.edu.pucp.iweb.trabajo.Beans.BPedidoCliente;
+import pe.edu.pucp.iweb.trabajo.Beans.*;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -250,36 +248,34 @@ public class ClienteDao {
 
     //FUNCION PARA BUSCAR UN PRODUCTO
 
-    public void buscarProducto() {
-        Scanner sc = new Scanner(System.in);
-        String sql = "SELECT idProducto,nombre,descripcion,requiereReceta,foto,stock,precio FROM producto p WHERE p.nombre LIKE ?";
-        String agregarProducto = "";
+    public ArrayList<BBuscarProductoCliente> buscarProducto(String nombre) {
+        ArrayList<BBuscarProductoCliente> productos = new ArrayList<>();
+
+        nombre = nombre.toLowerCase();
+
+        String sql = "SELECT nombre,descripcion,foto,precio FROM producto p WHERE lower(p.nombre) LIKE ?;";
+
+
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
-            System.out.print("Ingrese el nombre del producto a buscar: ");
-            String palabra = sc.nextLine();
-            palabra = palabra + "%";
-            pstmt.setString(1,palabra);
-            ResultSet rs = pstmt.executeQuery();
-            System.out.println("IdProducto   |   Nombre del Producto  | Descripcion | Requiere Receta  |  Foto  |   Stock    |  Precio ");
-            while (rs.next()) {
-                String nombre = rs.getString(2);
-                String idProducto = rs.getString(1);
-                String descripcion = rs.getString(3);
-                boolean requiereReceta = rs.getBoolean(4);
-                String foto = rs.getString(5);
-                int stock = rs.getInt(6);
-                double precio = rs.getDouble(7);
-                System.out.println(idProducto + "||" + nombre + "||" + descripcion + "||" + requiereReceta + "||" + foto + "||" + stock + "||" + precio);
-                agregarProducto = idProducto;
+             pstmt.setString(1,"%" + nombre + "%");
 
-            }
-            System.out.println("------------------------------------------------------------------------");
+             try(ResultSet rs = pstmt.executeQuery()){
+                 while (rs.next()) {
+                     BBuscarProductoCliente producto = new BBuscarProductoCliente();
+                     producto.setNombre(rs.getString(1));
+                     producto.setDescripcion(rs.getString(2));
+                     producto.setFoto(rs.getString(3));
+                     producto.setPrecio(rs.getDouble(4));
+                     productos.add(producto);
+                 }
+             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        salir:
+        /*salir:
         while (true) {
 
             System.out.println("1. Agregar al carrito de compras");
@@ -294,7 +290,8 @@ public class ClienteDao {
                     buscarProducto();
                     break salir;
             }
-        }
+        }*/
+        return productos;
     }
     public BCliente updatePerfil(String nombre, String Apellido, String distrito,String correo){
         String sql="UPDATE cliente c SET c.nombre = ?, c.apellidos = ?, c.distrito = ? WHERE c.logueo_correo= ?;";

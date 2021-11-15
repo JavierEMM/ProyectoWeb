@@ -1,5 +1,10 @@
+<%@ page import="pe.edu.pucp.iweb.trabajo.Beans.BBuscarProductoCliente" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%ArrayList<BBuscarProductoCliente> bBuscarProductoClientes = (ArrayList) request.getAttribute("productos");%>
+
+
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -12,7 +17,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="FlujoUsuario/css/styles.css" rel="stylesheet" />
 		
     </head>
     <body>
@@ -36,7 +41,7 @@
 
                                             <div class="form-group">
 												<div class="fake-input">
-													<input id="farmacia" type="search" name="campobusqueda" list="listafarmacias" placeholder="Elige una farmacia"<label for="listadistritos">
+													<input id="farmacia" type="search" name="campobusqueda" list="listafarmacias" placeholder="Elige una farmacia"label for="listadistritos">
 													<img src="images/home-icon.png" width="20" />
 												</div>
                                                 <datalist id="listafarmacias">
@@ -98,16 +103,19 @@
 				</div>
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="images/jabonProtex.png" alt="..." /></div>
-                    <div class="col-md-6">
-                        <div class="small mb-1">SKU: BST-498</div>
-                        <h1 class="display-5 fw-bolder">Jabon corporal</h1>
-                        <div class="fs-5 mb-5">
-                            <!--<span class="text-decoration-line-through">$45.00</span> -->
-                            <span>S/.40.00</span>
-                        </div>
-                        <p class="lead">Limpieza y cuidado para tu piel </p>
-						<p class="lead">Elimina el 99,9% de bacteriasl </p>
+                    </tr>
+                    <% for (BBuscarProductoCliente productoCliente : bBuscarProductoClientes) { %>
+                        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="FlujoUsuario/images/jabonProtex.png" alt="..." /></div>
+                        <div class="col-md-6">
+
+                            <div class="small mb-1">SKU: BST-498</div>
+                            <h1 class="display-5 fw-bolder"><%=productoCliente.getNombre()%></h1>
+                            <div class="fs-5 mb-5">
+                                <!--<span class="text-decoration-line-through">$45.00</span> -->
+                                <span>S/.<%=productoCliente.getPrecio()%></span>
+                            </div>
+                            <p class="lead"><%=productoCliente.getDescripcion()%> </p>
+
                         <div class="d-flex">
 							<form>
 								<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
@@ -121,7 +129,10 @@
 
                         </div>
 						
-                    </div>
+                        </div>
+
+                    </tr>
+                    <% } %>
                 </div>
             </div>
         </section>
@@ -133,7 +144,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="images/Packshot-Panadol-Forte.png" alt="..." />
+                            <img class="card-img-top" src="FlujoUsuario/images/Packshot-Panadol-Forte.png" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">

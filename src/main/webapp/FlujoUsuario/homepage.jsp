@@ -38,7 +38,7 @@
                                             <div class="form-group">
 												<div class="fake-input">
 													<input id="farmacia" type="search" list="listafarmacias" placeholder="Elige una farmacia" label for="listadistritos">
-													<img src="images/home-icon.png" width="20" />
+													<img src="FlujoUsuario/images/home-icon.png" width="20" />
 												</div>
                                                 <datalist id="listafarmacias">
                                                     <option value="Farmacia Fibra Toxica">Farmacia Fibra Toxica</option>
@@ -98,9 +98,11 @@
                     <p class="lead fw-normal text-white-50 mb-0">El mejor lugar para comprar</p>
                 </div>
             </div>
-			<div class = "box">
-                <input type="text" name="search" placeholder="Buscar producto" class="src" autocomplete = "off">
-		    </div>
+            <form method="post" action="<%=request.getContextPath()%>/Usuario?opcion=Buscar">
+                <div class = "box">
+                    <input  type="text" name="search" placeholder="Buscar producto" class="src" autocomplete = "off">
+                </div>
+            </form>
         </header>
         <!-- Section-->
 		
