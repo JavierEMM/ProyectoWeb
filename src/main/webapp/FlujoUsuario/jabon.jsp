@@ -14,7 +14,7 @@
         <meta name="author" content="" />
         <title>Jabon</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="FlujoUsuario/assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -99,35 +99,18 @@
             </form>
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    </tr>
                     <% for (BBuscarProductoCliente productoCliente : bBuscarProductoClientes) { %>
                         <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="FlujoUsuario/images/jabonProtex.png" alt="..." /></div>
                         <div class="col-md-6">
-
-                            <div class="small mb-1">SKU: BST-498</div>
-                            <h1 class="display-5 fw-bolder"><%=productoCliente.getNombre()%></h1>
+                            <a style=" text-decoration: none; color: #1a1e21" href="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=mostrarProducto"><h1><%=productoCliente.getNombre()%></h1></a>
                             <div class="fs-5 mb-5">
                                 <!--<span class="text-decoration-line-through">$45.00</span> -->
-                                <span>S/.<%=productoCliente.getPrecio()%></span>
+                                <span style="font-size:20px;"><b>Precio: </b>S/.<%=productoCliente.getPrecio()%></span>
+                                <br>
+                                <span style="font-size:20px;" ><b>Descripcion: </b><%=productoCliente.getDescripcion()%> </span>
                             </div>
-                            <p class="lead"><%=productoCliente.getDescripcion()%> </p>
-
-                        <div class="d-flex">
-							<form method="post" action="<%=request.getContextPath()%>/Usuario?correo=<%=correo%>&opcion=carrito">
-								<div class="value-button" onclick="decreaseValue()">-</div>
-								<input name="numero" type="number" id = "number" value = "0" />
-							    <div class="value-button" onclick="increaseValue()">+</div>
-							                            <button onclick="return confirm('Esta seguro de comprar esta cantidad?')" class="btn btn-outline-dark flex-shrink-0" type="submit">
-                                <i class="bi-cart-fill me-1"></i>
-                                Add to cart
-                            </button>
-							</form>
                         </div>
-						
-                        </div>
-
-                    </tr>
-                    <% } %>
+                    <%}%>
                 </div>
             </div>
         </section>

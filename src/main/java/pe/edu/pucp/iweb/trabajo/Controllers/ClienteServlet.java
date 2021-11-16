@@ -36,9 +36,11 @@ public class ClienteServlet extends HttpServlet {
                 RequestDispatcher view2 = request.getRequestDispatcher("/FlujoUsuario/historial.jsp");
                 view2.forward(request, response);
                 break;
-            case "carrito":
+            case "mostrarProducto":
+                RequestDispatcher view7 = request.getRequestDispatcher("/FlujoUsuario/paracetamol.jsp");
+                view7.forward(request, response);
                 break;
-            case "mostrarPaginaFaramcia":
+            case "carrito":
                 break;
             case "salir":
                 RequestDispatcher view1 = request.getRequestDispatcher("/FlujoUsuario/homepage.jsp");
